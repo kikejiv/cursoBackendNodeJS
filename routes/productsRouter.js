@@ -33,17 +33,23 @@ router.get('/filter', (req, res) => { //esta es una ruta en especifica y se decl
 
 router.get('/:id', (req, res) => { //endpoint para recibir el detalle de un producto desde el id
   const { id } = req.params; //este request recoje el id
-  res.json({
+  if (id === '999') {
+    res.status(404).json({
+      message: 'Not Found'
+    });
+  } else {
+  res.status(200).json({
       id,
       name: 'Producto 2',
       price: 2000
     });
+  }
 });
 
 //metodo post para enviar informacion
 router.post('/', (req, res) => {
   const body = req.body;
-  res.json({
+  res.status(201).json({
     message: 'created',
     data: body
   });

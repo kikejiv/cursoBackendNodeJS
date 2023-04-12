@@ -34,18 +34,24 @@ res.json(users);
  //para crear manualmente cada usuario
  router.get('/:id', (req, res) => { //endpoint para recibir el detalle de un producto desde el id
    const { id } = req.params; //este request recoje el id
+   if (id === '999') {
+    res.status(404).json({
+      message: 'Not Found'
+    });
+  } else {
    res.json({
        id,
        name: 'Kike',
        age: 37,
        email: 'jiv@gmail.com',
      });
+    }
  });
 
 
  router.post('/', (req, res) => {
    const body = req.body;
-   res.json({
+   res.status(201).json({
      message: 'ceated',
      data: body
    });
