@@ -15,9 +15,6 @@ app.get('/nueva-ruta', (req, res) => { // para definir la ruta / seguido del cal
 routerApi(app);
 
 
-
-
-
  app.listen(port, () => { //es para que escuche el puertoo
   console.log('Mi port ' + port);
  });
