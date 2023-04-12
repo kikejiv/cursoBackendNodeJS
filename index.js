@@ -4,6 +4,8 @@ const routerApi = require('./routes'); //traemos el modulo de routes
 const app = express(); // asi crearmos nuestra aplicacion
 const port = 3000; // definimo el puerto donde queremos que nos corra
 
+app.use(express.json()); //middelware para recibir informacion post tipo json
+
 app.get('/', (req, res) => { // para definir la ruta / seguido del callback
   res.send('Hola mi server en express'); //retorna
 });
