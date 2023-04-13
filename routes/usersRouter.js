@@ -1,23 +1,16 @@
 const express = require('express'); //traemos el modulo de express
-const { faker } = require('@faker-js/faker');
+
+const UsersService = require('./../services/users.service');
 
 const router = express.Router();
+const service = new UsersService();
 
 router.get('/', (req, res) => {
-  const users = [];
-  const { size } = req.query;
-  const limit = size || 10;
-  for (let index = 0; index < limit; index++) {
-    users.push({
-      name: faker.name.firstName(),
-      email: faker.internet.email(),
-      avatar: faker.image.avatar(),
+  const users = service.find();
+  res.json(users);
 });
-}
 
-res.json(users);
 
-});
 // no se que hace esta funcion 😅
  router.get('/users', (req, res) => {
    const { limit, offset } = req.query; // parametros tipo query
@@ -34,18 +27,8 @@ res.json(users);
  //para crear manualmente cada usuario
  router.get('/:id', (req, res) => { //endpoint para recibir el detalle de un producto desde el id
    const { id } = req.params; //este request recoje el id
-   if (id === '999') {
-    res.status(404).json({
-      message: 'Not Found'
-    });
-  } else {
-   res.json({
-       id,
-       name: 'Kike',
-       age: 37,
-       email: 'jiv@gmail.com',
-     });
-    }
+   const user = service.findOne(id);
+   res.json(user);
  });
 
 

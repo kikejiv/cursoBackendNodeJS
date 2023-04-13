@@ -1,49 +1,19 @@
 const express = require('express'); //traemos el modulo de express
-const { faker } = require('@faker-js/faker');
+
+const ProductsService = require('./../services/product.service');
 
 const router = express.Router();
+const service = new ProductsService();
 
 router.get('/', (req, res) => { // para definir la ruta / seguido del callback
-  const product = [];
-  const { size } = req.query;
-  const limit = size || 10;
-  for (let index = 0; index < limit; index++) {
-    product.push({
-      name: faker.commerce.productName(),
-      price: parseInt(faker.commerce.price(), 10),
-      image: faker.image.imageUrl()
-    });
-  }
-  res.json(product);
-  //   [
-  //   {
-  //     name: 'Producto 1',
-  //     price: 1000
-  //   },
-  //   {
-  //     name: 'Producto 2',
-  //     price: 2000
-  //   }
-  // ]);
-});
-
-router.get('/filter', (req, res) => { //esta es una ruta en especifica y se declara antes que las rutas dinamica
-  res.send('YO soy un filter');
+  const products = service.find();
+  res.json(products);
 });
 
 router.get('/:id', (req, res) => { //endpoint para recibir el detalle de un producto desde el id
   const { id } = req.params; //este request recoje el id
-  if (id === '999') {
-    res.status(404).json({
-      message: 'Not Found'
-    });
-  } else {
-  res.status(200).json({
-      id,
-      name: 'Producto 2',
-      price: 2000
-    });
-  }
+  const product = service.findOne(id); //
+  res.json(product);// se envia directamente el producto
 });
 
 //metodo post para enviar informacion

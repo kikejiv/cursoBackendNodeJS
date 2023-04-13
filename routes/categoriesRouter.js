@@ -1,23 +1,13 @@
 const express = require('express'); //traemos el modulo de express
-const { faker } = require('@faker-js/faker');
+
+const CategoriesService = require('./../services/categories.service');
 
 const router = express.Router();
+const service = new CategoriesService();
 
 router.get('/', (req, res) => {
-  const categories = [];
-  const { size } = req.query;
-  const limit = size || 10;
-  for (let index = 0; index < limit; index++) {
-    categories.push({
-      categoriasId: faker.datatype.number(1000),
-      nameCategories: faker.commerce.productAdjective(),
-      // email: faker.internet.email(),
-      // avatar: faker.image.avatar(),
-});
-}
-
-res.json(categories);
-
+  const categories = service.find();
+  res.json(categories);
 });
 
 
@@ -30,18 +20,11 @@ router.get('/categorias/:categoriasId/productos/:productosId', (req, res) => { /
 });
 
 router.get('/:id', (req, res) => {
-  const { id  } = req.params;
-  if (id === '999') {
-    res.status(404).json({
-      message: 'Not Found'
-    });
-  } else {
-  res.json({
-    categoriasId,
-    productosId,
-  });
-}
+  const { id } = req.params; //este request recoje el id
+  const categories = service.findOne(id); //
+  res.json(categories);// se envia directamente el producto
 });
+
 
 router.post('/', (req, res) => {
   const body = req.body;
