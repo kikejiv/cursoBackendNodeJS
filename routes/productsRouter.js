@@ -19,30 +19,23 @@ router.get('/:id', (req, res) => { //endpoint para recibir el detalle de un prod
 //metodo post para enviar informacion
 router.post('/', (req, res) => {
   const body = req.body;
-  res.status(201).json({
-    message: 'created',
-    data: body
-  });
+  const newProduct = service.create(body);
+  res.status(201).json(newProduct);
 })
 
 //metodo patch para enviar actualizar la informacion de manera flexible solo los camb pos que necesitamos
 router.patch('/:id', (req, res) => {
   const { id } = req.params;
   const body = req.body;
-  res.json({
-    message: 'update',
-    data: body,
-    id,
-  });
+  const product = service.update(id, body);
+  res.json(product);
 })
 
 //metodo delete para eliminar los productos
 router.delete('/:id', (req, res) => {
   const { id } = req.params;
-  res.json({
-    message: 'deleted',
-    id,
-  });
+  const rta = service.delete(id);
+  res.json(rta);//se envia la respuesta en un json rta
 })
 
 module.exports = router;
