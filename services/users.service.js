@@ -18,7 +18,7 @@ class UsersService {
     }
   }
 
-  create(data) {
+  async create(data) {
     const newUser = {
       id: faker.datatype.uuid(),
       ...data
@@ -28,14 +28,18 @@ class UsersService {
   }
 
   find() {
-    return this.users;
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(this.users);
+      }, 5000)
+    });
   }
 
-  findOne(id) {
+  async findOne(id) {
     return this.users.find(item => item.id === id);
   }
 
-  update(id, changes) {
+  async update(id, changes) {
     const index = this.users.findIndex(item => item.id === id);//findIndex retorna la poscion donde esta el objeto
     if (index === -1) {//se valida si el elemento existe
       throw new Error('User not Found');
@@ -49,7 +53,7 @@ class UsersService {
 
   }
 
-  delete(id) {
+  async delete(id) {
     const index = this.users.findIndex(item => item.id === id);//findIndex retorna la poscion donde esta el objeto
     if (index === -1) {//se valida si el elemento existe
       throw new Error('User not Found');
