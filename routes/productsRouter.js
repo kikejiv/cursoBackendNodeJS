@@ -10,10 +10,15 @@ router.get('/', async (req, res) => { // para definir la ruta / seguido del call
   res.json(products);
 });
 
-router.get('/:id', async (req, res) => { //endpoint para recibir el detalle de un producto desde el id
+router.get('/:id', async (req, res, next) => { //endpoint para recibir el detalle de un producto desde el id
+ try {
   const { id } = req.params; //este request recoje el id
   const product = await service.findOne(id); //
   res.json(product);// se envia directamente el producto
+ } catch (error) {
+   next(error);
+ }
+
 });
 
 //metodo post para enviar informacion
@@ -24,16 +29,14 @@ router.post('/', async (req, res) => {
 })
 
 //metodo patch para enviar actualizar la informacion de manera flexible solo los camb pos que necesitamos
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', async (req, res, next => {
  try {
   const { id } = req.params;
   const body = req.body;
   const product = await service.update(id, body);
   res.json(product);
  } catch (error) {
-   res.status(404).json({
-     message: error.message
-   });
+  next(error);
  }
 
 })
