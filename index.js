@@ -1,7 +1,7 @@
 const express = require('express'); //traemos el modulo de express
 const routerApi = require('./routes'); //traemos el modulo de routes
 
-const { logErrors, errorHandler, boomErrorHandler } = require('./middlewares/error.handler');
+const { logErrors, errorHandler, boomErrorHandler } = require('./middlewares/error.handler'); //hacemos eñl llamado a los modulos de errores
 
 const app = express(); // asi crearmos nuestra aplicacion
 const port = 3000; // definimo el puerto donde queremos que nos corra

@@ -11,8 +11,8 @@ class CategoriesService {
     const limit = 100;
     for (let index = 0; index < limit; index++) {
       this.categories.push({
-        categoriasId: faker.datatype.number(1000),
-        nameCategories: faker.commerce.productAdjective(),
+        categoriesId: faker.datatype.number(1000),
+        categoriesName: faker.commerce.productAdjective(),
       });
     }
   }
