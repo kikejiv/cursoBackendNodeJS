@@ -1,4 +1,4 @@
-const Joi = require('joi'),
+const Joi = require('joi');
 
 const categoriesId = Joi.string().uuid();
 const categoriesName = Joi.string().min(3).max(25);
