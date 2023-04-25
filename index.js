@@ -5,7 +5,7 @@ const routerApi = require('./routes'); //traemos el modulo de routes
 const { logErrors, errorHandler, boomErrorHandler } = require('./middlewares/error.handler'); //hacemos eñl llamado a los modulos de errores
 
 const app = express(); // asi crearmos nuestra aplicacion
-const port = 3000; // definimo el puerto donde queremos que nos corra
+const port = process.env.PORT || 3000; // defino la variable de entorno en el puerto donde queremos que nos corra
 
 app.use(express.json()); //middelware para recibir informacion post tipo json
 
@@ -13,10 +13,10 @@ app.use(express.json()); //middelware para recibir informacion post tipo json
 const whitelist = ['http://localhost:8080', 'https://myapp.co']; //creamos un array e ingresamos las url las cuales van a tener el permiso
 const options = {
   origin: (origin, callback) => {
-    if (whitelist.includes(origin)) {
+    if (whitelist.includes(origin) || !origin) { //si la url esta en la lista le permite el ingreso a la api (|| !origin es para que acepte el mismo origen)
       callback(null, true);
     }else {
-      callback(new Error('No permitido'));
+      callback(new Error('No permitido'));// sino esta en la lista genera error
     }
   }
 }
